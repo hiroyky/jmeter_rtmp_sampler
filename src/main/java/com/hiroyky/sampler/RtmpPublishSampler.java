@@ -11,7 +11,6 @@ public class RtmpPublishSampler implements JavaSamplerClient {
     static final String DESTINATION_URL = "Destination RTMP URL";
     static final String SOURCE_FILE = "Source file";
     static final String FFMPEG_PATH = "FFMPEG Binary Path";
-    static final String IS_LOOP = "loop?";
 
     @Override
     public void setupTest(JavaSamplerContext context) {
@@ -21,7 +20,6 @@ public class RtmpPublishSampler implements JavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext context) {
         String destination = context.getParameter(DESTINATION_URL);
         String source = context.getParameter(SOURCE_FILE);
-        boolean isLoop = context.getParameter(IS_LOOP).equalsIgnoreCase("true");
         String ffmpegBin = context.getParameter(FFMPEG_PATH);
 
         StringBuilder builder = new StringBuilder();
@@ -33,10 +31,7 @@ public class RtmpPublishSampler implements JavaSamplerClient {
         SampleResult result = new SampleResult();
 
         try {
-            RtmpPublisher publisher = new RtmpPublisher(source, destination, ffmpegBin, isLoop);
-            String cmd = publisher.init();
-            System.out.println("cmd: " + cmd);
-            builder.append("cmd: ").append(cmd).append("\n");
+            RtmpPublisher publisher = new RtmpPublisher(source, destination, ffmpegBin);
             result.sampleStart();
             publisher.run();
             result.sampleEnd();
@@ -62,7 +57,6 @@ public class RtmpPublishSampler implements JavaSamplerClient {
         defaultParameters.addArgument(DESTINATION_URL, "rtmp://localhost:1935/app/stream_key");
         defaultParameters.addArgument(SOURCE_FILE, "/absolute/path/to/file.mp4");
         defaultParameters.addArgument(FFMPEG_PATH, "ffmpeg");
-        defaultParameters.addArgument(IS_LOOP, "true");
         return defaultParameters;
     }
 }

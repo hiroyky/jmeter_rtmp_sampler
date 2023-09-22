@@ -26,9 +26,6 @@ public class RtmpSubscribeSampler implements JavaSamplerClient {
         SampleResult result = new SampleResult();
         try {
             RtmpSubscriber subscriber = new RtmpSubscriber(source, ffmpegBin);
-            String cmd = subscriber.init();
-            System.out.println("cmd: " + cmd);
-            builder.append("cmd: ").append(cmd).append("\n");
             result.sampleStart();
             subscriber.run();
             result.sampleEnd();
