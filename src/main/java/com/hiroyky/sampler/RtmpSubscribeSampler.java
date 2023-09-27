@@ -38,7 +38,7 @@ public class RtmpSubscribeSampler implements JavaSamplerClient {
             builder.append("error: ").append(e.getMessage()).append("\n");
             result.setResponseMessage(builder.toString());
         }
-        return null;
+        return result;
     }
 
     @Override
